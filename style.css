@@ -22,6 +22,7 @@
     touch-action: manipulation;
     user-select: none;
     cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
   }
   
   .upgrade {
