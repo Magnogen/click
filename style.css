@@ -1,0 +1,47 @@
+@keyframes rotate {
+    0%   { transform: rotate(-15deg) }
+    50%  { transform: rotate( 15deg) }
+    100% { transform: rotate(-15deg) }
+  }
+  
+  body {
+    font-family: monospace;
+    font-size: 1rem;
+  }
+  
+  .row {
+    display: flex;
+    width: 100%;
+  }
+  
+  .hideoverflow {
+    overflow: hidden;
+  }
+  
+  .clickable {
+    touch-action: manipulation;
+    user-select: none;
+    cursor: pointer;
+  }
+  
+  .upgrade {
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-end;
+  }
+  .unavailable {
+    color: #808080;
+    text-decoration: line-through;
+    cursor: default;
+  }
+  
+  #click {
+    display: flex;
+    font-size: 2rem;
+    height: 33vh;
+    justify-content: center;
+    align-items: center;
+    animation: rotate 4s infinite ease-in-out;
+    transition: font-size 0.2s ease-out;
+  }
+  
