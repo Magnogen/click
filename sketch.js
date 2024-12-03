@@ -12,11 +12,11 @@ on('load', () => {
   const eclicksPerTap = $('#clickspertap');
   const eclicksPerTapUpgrade = $('#clickspertapupgrade');
   let clicksPerTap = 1;
-  let clicksPerTapCost = () => 10 * ((clicksPerTap-1)**2);
+  let clicksPerTapCost = () => 10 * (clicksPerTap**2);
   const eautoclickers = $('#autoclickers');
   const eautoclickersUpgrade = $('#autoclickersupgrade');
   let autoclickers = 0;
-  let autoclickersCost = () => 100 * (autoclickers**2);
+  let autoclickersCost = () => 50 * ((autoclickers+1)**2);
   
   if (localStorage.getItem('clicks')) {
     clicks = +localStorage.getItem('clicks');
