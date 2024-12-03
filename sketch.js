@@ -70,7 +70,7 @@ on('load', () => {
   });
   
   setInterval(() => {
-    clicks += autoclickers;
+    clicks += autoclickers * clicksPerTap;
     update();
   }, 1000)
   
