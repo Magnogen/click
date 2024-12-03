@@ -1,48 +1,46 @@
-@keyframes rotate {
-    0%   { transform: rotate(-15deg) }
-    50%  { transform: rotate( 15deg) }
-    100% { transform: rotate(-15deg) }
-  }
-  
-  body {
-    font-family: monospace;
-    font-size: 1rem;
-  }
-  
-  .row {
-    display: flex;
-    width: 100%;
-  }
-  
-  .hideoverflow {
-    overflow: hidden;
-  }
-  
-  .clickable {
-    touch-action: manipulation;
-    user-select: none;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-  }
-  
-  .upgrade {
-    display: flex;
-    flex-grow: 1;
-    justify-content: flex-end;
-  }
-  .unavailable {
-    color: #808080;
-    text-decoration: line-through;
-    cursor: default;
-  }
-  
-  #click {
-    display: flex;
-    font-size: 2rem;
-    height: 33vh;
-    justify-content: center;
-    align-items: center;
-    animation: rotate 4s infinite ease-in-out;
-    transition: font-size 0.2s ease-out;
-  }
-  
+body {
+  font-family: monospace;
+  font-size: 1rem;
+}
+
+.row {
+  display: flex;
+  width: 100%;
+}
+
+.clickable {
+  touch-action: manipulation;
+  user-select: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.upgrade {
+  display: flex;
+  flex-grow: 1;
+  justify-content: flex-end;
+}
+.unavailable {
+  color: #808080;
+  text-decoration: line-through;
+  cursor: default;
+}
+
+@keyframes spin {
+  0%   { transform: rotate(-15deg) }
+  50%  { transform: rotate( 15deg) }
+  100% { transform: rotate(-15deg) }
+}
+
+#click {
+  display: flex;
+  font-size: 2rem;
+  height: 33vh;
+  justify-content: center;
+  align-items: center;
+  transition: font-size 0.25s ease-out;
+}
+
+#clicktext {
+  animation: spin 4s infinite ease-in-out;
+}
