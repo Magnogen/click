@@ -96,7 +96,7 @@ on('load', () => {
   }, 1000);
   
   setInterval(() => {
-    clicks += megaclickers;
+    clicks += megaclickers * clicksPerTap;
     update();
   }, 100);
   
