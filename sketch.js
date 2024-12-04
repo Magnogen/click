@@ -25,11 +25,12 @@ on('load', () => {
     autoclickers = +localStorage.getItem('autoclickers');
     megaclickers = +localStorage.getItem('megaclickers');
     const then = +localStorage.getItem('then');
-    if (!then) return;
-    const now = Date.now();
-    const secs = (now - then) / 1000;
-    clicks += autoclickers * clicksPerTap * (0|secs);
-    clicks += megaclickers * clicksPerTap * (0|secs*10);
+    if (then) {
+      const now = Date.now();
+      const secs = (now - then) / 1000;
+      clicks += autoclickers * clicksPerTap * (0|secs);
+      clicks += megaclickers * clicksPerTap * (0|secs*10);
+    }
   }
   
   reset = () => {
