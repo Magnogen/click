@@ -41,26 +41,27 @@ on('load', () => {
   }
   
   const check = (value, cost) => value < cost ? 'add' : 'remove';
+  const fmt = (num) => num.toLocaleString();
   const update = () => {
     localStorage.setItem('then', Date.now());
     
     eclicktext.innerText = `+${clicksPerTap}`;
-    eclicks.innerHTML = `Clicks: ${clicks}`;
+    eclicks.innerHTML = `Clicks: ${fmt(clicks)}`;
     localStorage.setItem('clicks', clicks);
     
-    eclicksPerTap.innerHTML = `Clicks Per Tap: ${clicksPerTap}`;
+    eclicksPerTap.innerHTML = `Clicks Per Tap: ${fmt(clicksPerTap)}`;
     localStorage.setItem('clicksPerTap', clicksPerTap);
-    eclicksPerTapUpgrade.innerHTML = `Upgrade (${clicksPerTapCost()} Clicks)`;
+    eclicksPerTapUpgrade.innerHTML = `${fmt(clicksPerTapCost())} Clicks`;
     eclicksPerTapUpgrade.classList[check(clicks, clicksPerTapCost())]('unavailable');
     
-    eautoclickers.innerHTML = `Autoclickers: ${autoclickers}`;
+    eautoclickers.innerHTML = `Autoclickers: ${fmt(autoclickers)}`;
     localStorage.setItem('autoclickers', autoclickers);
-    eautoclickersUpgrade.innerHTML = `Upgrade (${autoclickersCost()} Clicks)`;
+    eautoclickersUpgrade.innerHTML = `${fmt(autoclickersCost())} Clicks`;
     eautoclickersUpgrade.classList[check(clicks, autoclickersCost())]('unavailable');
     
-    emegaclickers.innerHTML = `Megaclickers: ${megaclickers}`;
+    emegaclickers.innerHTML = `Megaclickers: ${fmt(megaclickers)}`;
     localStorage.setItem('megaclickers', megaclickers);
-    emegaclickersUpgrade.innerHTML = `Upgrade (${megaclickersCost()} Clicks)`;
+    emegaclickersUpgrade.innerHTML = `${fmt(megaclickersCost())} Clicks`;
     emegaclickersUpgrade.classList[check(clicks, megaclickersCost())]('unavailable');
   }
   update();
@@ -105,7 +106,7 @@ on('load', () => {
   }, 1000);
   
   setInterval(() => {
-    clicks += megaclickers * clicksPerTap;
+    clicks += megaclickers * autoclickers * clicksPerTap;
     update();
   }, 100);
   
