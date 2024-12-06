@@ -18,26 +18,34 @@ on('load', () => {
   const emegaclickersUpgrade = $('#megaclickersupgrade');
   let megaclickers = 0;
   let megaclickersCost = () => 1000 * ((megaclickers+1)**3);
+  let present = 0;
   
-  if (localStorage.getItem('clicks')) {
+  if (localStorage.getItem('clicks')) (() => {
     clicks = +localStorage.getItem('clicks');
     clicksPerTap = +localStorage.getItem('clicksPerTap');
     autoclickers = +localStorage.getItem('autoclickers');
     megaclickers = +localStorage.getItem('megaclickers');
+    
     const then = +localStorage.getItem('then');
-    if (then) {
-      const now = Date.now();
-      const secs = (now - then) / 1000;
-      clicks += autoclickers * clicksPerTap * (0|secs);
-      clicks += megaclickers * autoclickers * clicksPerTap * (0|secs*10);
-    }
-  }
+    if (!then) return;
+    
+    const now = Date.now();
+    const secs = 0|(now - then) / 1000;
+    present += autoclickers * clicksPerTap * secs;
+    present += megaclickers * autoclickers * clicksPerTap * secs*10;
+    
+    if (secs > 1) return;
+    
+    clicks += present;
+    present = 0;
+  })();
   
   reset = () => {
     clicks = 0;
     clicksPerTap = 1;
     autoclickers = 0;
     megaclickers = 0;
+    present = 0;
   }
   
   const check = (value, cost) => value < cost ? 'add' : 'remove';
@@ -45,7 +53,11 @@ on('load', () => {
   const update = () => {
     localStorage.setItem('then', Date.now());
     
-    eclicktext.innerText = `+${clicksPerTap}`;
+    if (present) {
+      eclicktext.innerText = '🎁';
+    } else {
+      eclicktext.innerText = `+${clicksPerTap}`;
+    }
     eclicks.innerHTML = `Clicks: ${fmt(clicks)}`;
     localStorage.setItem('clicks', clicks);
     
@@ -70,7 +82,13 @@ on('load', () => {
   
   eclick.on('click', () => {
     clicks += clicksPerTap;
-    eclick.style.fontSize = '2.5rem';
+    if (present) {
+      clicks += present;
+      eclick.style.fontSize = '5rem';
+      present = 0;
+    } else {
+      eclick.style.fontSize = '2.5rem';
+    }
     eclick.style.transition = 'none';
     afterFrame(() => {
       eclick.style.removeProperty('font-size');
@@ -79,6 +97,7 @@ on('load', () => {
     update();
   });
   
+  // clicks per tap
   eclicksPerTapUpgrade.on('click', () => {
     if (clicks < clicksPerTapCost()) return;
     clicks -= clicksPerTapCost();
@@ -86,29 +105,31 @@ on('load', () => {
     update();
   });
   
+  // autoclickers
   eautoclickersUpgrade.on('click', () => {
     if (clicks < autoclickersCost()) return;
     clicks -= autoclickersCost();
     autoclickers++;
     update();
   });
+  setInterval(() => {
+    clicks += autoclickers * clicksPerTap;
+    update();
+  }, 1000);
   
+  // megaclickers
   emegaclickersUpgrade.on('click', () => {
     if (clicks < megaclickersCost()) return;
     clicks -= megaclickersCost();
     megaclickers++;
     update();
   });
-  
-  setInterval(() => {
-    clicks += autoclickers * clicksPerTap;
-    update();
-  }, 1000);
-  
   setInterval(() => {
     clicks += megaclickers * autoclickers * clicksPerTap;
     update();
   }, 100);
+  
+  
   
   
 })
