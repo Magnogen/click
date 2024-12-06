@@ -29,7 +29,7 @@ on('load', () => {
       const now = Date.now();
       const secs = (now - then) / 1000;
       clicks += autoclickers * clicksPerTap * (0|secs);
-      clicks += megaclickers * clicksPerTap * (0|secs*10);
+      clicks += megaclickers * autoclickers * clicksPerTap * (0|secs*10);
     }
   }
   
