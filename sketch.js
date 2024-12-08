@@ -34,7 +34,10 @@ on('load', () => {
     present += autoclickers * clicksPerTap * secs;
     present += megaclickers * autoclickers * clicksPerTap * secs*10;
     
-    if (secs > 1) return;
+    if (secs > 1) {
+      eclicktext.innerText = `🎁`;
+      return;
+    }
     
     clicks += present;
     present = 0;
@@ -53,9 +56,7 @@ on('load', () => {
   const update = () => {
     localStorage.setItem('then', Date.now());
     
-    if (present) {
-      eclicktext.innerText = '🎁';
-    } else {
+    if (!present) {
       eclicktext.innerText = `+${clicksPerTap}`;
     }
     eclicks.innerHTML = `Clicks: ${fmt(clicks)}`;
@@ -85,7 +86,10 @@ on('load', () => {
     if (present) {
       clicks += present;
       eclick.style.fontSize = '5rem';
-      present = 0;
+      setTimeout(() => {
+        present = 0;
+        update();
+      }, 200)
     } else {
       eclick.style.fontSize = '2.5rem';
     }
