@@ -1,6 +1,13 @@
+@keyframes spin {
+  0%   { transform: rotate(-15deg) }
+  50%  { transform: rotate( 15deg) }
+  100% { transform: rotate(-15deg) }
+}
+
 body {
   font-family: monospace;
   font-size: 1rem;
+  overflow: hidden;
 }
 
 .row {
@@ -25,12 +32,6 @@ body {
   color: #808080;
   text-decoration: line-through;
   cursor: default;
-}
-
-@keyframes spin {
-  0%   { transform: rotate(-15deg) }
-  50%  { transform: rotate( 15deg) }
-  100% { transform: rotate(-15deg) }
 }
 
 #click {

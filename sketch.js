@@ -18,6 +18,10 @@ on('load', () => {
   const emegaclickersUpgrade = $('#megaclickersupgrade');
   let megaclickers = 0;
   let megaclickersCost = () => 1000 * ((megaclickers+1)**3);
+  const epolyclickers = $('#polyclickers');
+  const epolyclickersUpgrade = $('#polyclickersupgrade');
+  let polyclickers = 0;
+  let polyclickersCost = () => 1000000 * ((polyclickers+1)**4);
   let present = 0;
   
   if (localStorage.getItem('clicks')) (() => {
@@ -25,6 +29,7 @@ on('load', () => {
     clicksPerTap = +localStorage.getItem('clicksPerTap');
     autoclickers = +localStorage.getItem('autoclickers');
     megaclickers = +localStorage.getItem('megaclickers');
+    polyclickers = +localStorage.getItem('polyclickers');
     
     const then = +localStorage.getItem('then');
     if (!then) return;
@@ -33,6 +38,7 @@ on('load', () => {
     const secs = 0|(now - then) / 1000;
     present += autoclickers * clicksPerTap * secs;
     present += megaclickers * autoclickers * clicksPerTap * secs*10;
+    present += polyclickers * megaclickers * autoclickers * clicksPerTap * secs*100;
     
     if (secs > 1) {
       eclicktext.innerText = `🎁`;
@@ -48,6 +54,7 @@ on('load', () => {
     clicksPerTap = 1;
     autoclickers = 0;
     megaclickers = 0;
+    polyclickers = 0;
     present = 0;
   }
   
@@ -76,6 +83,11 @@ on('load', () => {
     localStorage.setItem('megaclickers', megaclickers);
     emegaclickersUpgrade.innerHTML = `${fmt(megaclickersCost())} Clicks`;
     emegaclickersUpgrade.classList[check(clicks, megaclickersCost())]('unavailable');
+    
+    epolyclickers.innerHTML = `Polyclickers: ${fmt(polyclickers)}`;
+    localStorage.setItem('polyclickers', polyclickers);
+    epolyclickersUpgrade.innerHTML = `${fmt(polyclickersCost())} Clicks`;
+    epolyclickersUpgrade.classList[check(clicks, polyclickersCost())]('unavailable');
   }
   update();
   
@@ -130,6 +142,18 @@ on('load', () => {
   });
   setInterval(() => {
     clicks += megaclickers * autoclickers * clicksPerTap;
+    update();
+  }, 100);
+  
+  // polyclickers
+  epolyclickersUpgrade.on('click', () => {
+    if (clicks < polyclickersCost()) return;
+    clicks -= polyclickersCost();
+    polyclickers++;
+    update();
+  });
+  setInterval(() => {
+    clicks += 10 * polyclickers * megaclickers * autoclickers * clicksPerTap;
     update();
   }, 100);
   
